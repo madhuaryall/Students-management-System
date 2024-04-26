@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Test.Models;
 
 namespace Test.Data
 {
-    public class ApplicatonDbContext:DbContext
+    public class ApplicatonDbContext:IdentityDbContext
     {
         public ApplicatonDbContext(DbContextOptions<ApplicatonDbContext>options)
             :base(options)

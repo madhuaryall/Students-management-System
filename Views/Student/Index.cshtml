@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Test.Models.Student>
 
+
 <div class="row">
     <div class="col-12">
         <a class="btn btn-primary float-end" asp-action="Add">Add New</a>
@@ -28,7 +29,7 @@
                 Class
             </th>
             <th>Action</th>
-            
+
         </tr>
     </thead>
     <tbody>
@@ -40,19 +41,11 @@
                 <td>@item.Title</td>
                 <td>@item.Email</td>
                 <td>@item.Class</td>
-                <td><a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Update</a>
-
-
-
-                <a></a>
-                    </td>
-                
-               
-            
-                    
-
-              
-
+                <td>
+                    <a class="btn btn-primary" asp-action="AddEdit" asp-route-id="@item.Id" title="Edit"><i class="fa-solid fa-pen"></i></a>
+                    <a class="btn btn-secondary" asp-action="Detail" asp-route-id="@item.Id" title="Details"><i class="fa-solid fa-circle-info"></i></a>
+                    <a class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                </td>
             </tr>
         }
     </tbody>

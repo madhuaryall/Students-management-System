@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Test.Data;
 using Test.Models;
 
 namespace Test.Controllers
 {
+
+
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly ApplicatonDbContext _context;
@@ -68,15 +72,61 @@ namespace Test.Controllers
 
         return RedirectToAction("Index");
     }
-        [HttpPost]
-        public IActionResult Delete(int id)
+
+
+        [HttpGet]
+        public IActionResult AddEdit(int id)
         {
-            var studentinfo = _context.Students.FirstOrDefault(y => y.Id == id);
+            Student student = new Student();
+
+            if (id > 0)
+            {
+                student = _context.Students.FirstOrDefault(x => x.Id == id);
+            }
+
+            return View(student);
+        }
+
+        [HttpPost]
+        public IActionResult AddEdit(Student student)
+        {
+            if (student.Id == 0)
+            {
+                _context.Add(student);
+                _context.SaveChanges();
+
+            }
+            else
+            {
+
+                var studentinfo = _context.Students.FirstOrDefault(x => x.Id == student.Id);
+
+                studentinfo.FullName = student.FullName;
+                studentinfo.Class = student.Class;
+                studentinfo.Title = student.Title;
+                studentinfo.Email = student.Email;
+
+                _context.Update(studentinfo);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+        public IActionResult Remove(int id)
+        {
+            var studentinfo = _context.Students.FirstOrDefault(x => x.Id == id);
             _context.Remove(studentinfo);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
-        
-}
+        [HttpGet]
+        public IActionResult Detail(int id)
+        {
+            var studentinfo = _context.Students.FirstOrDefault(x => x.Id == id);
+            return View(studentinfo);
+        }
+    }
 }
 

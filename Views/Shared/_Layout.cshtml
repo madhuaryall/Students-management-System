@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Test.styles.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/0402136bb1.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -25,10 +27,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student List</a>
-                        </li>
+                        @if(User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student List</a>
+                            </li>
+                        }
                     </ul>
+                    <partial name="_LoginPartial"></partial>
                 </div>
             </div>
         </nav>
